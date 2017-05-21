@@ -65,7 +65,6 @@ Navigations and dispatchers
 Dispatchers are widgets that configure themselves and their children
 (i.e. broadly speaking the widget tree) based on the URI of the request.
 
-TODO
 Navigations are dispatchers that maintain a simple one-to-one association between
 an URI token [#uri-tokens]_ and a widget.
 
