@@ -138,9 +138,7 @@
 <div class="section" id="widgets">
 <h2>Widgets<a class="headerlink" href="#widgets" title="Permalink to this headline">¶</a></h2>
 <p>Widgets are the main building blocks of Weblocks (hence the name).</p>
-<p>TODO
-At the heart of Weblocks is a tree`&#8217;w_footnote(An acyclic graph with exactly one
-parent per node) of widgets that is manipulated by the clients requests. When a
+<p>At the heart of Weblocks is a tree <a class="footnote-reference" href="#tree" id="id1">[1]</a> of widgets that is manipulated by the clients requests. When a
 client sends its first request to a Weblocks application then a new session is
 started for it and a widget tree is associated with this session.</p>
 <p>This initial widget tree is computed as defined by the application developer.
@@ -186,9 +184,7 @@ a normal request will be initiated.</p>
 (i.e. broadly speaking the widget tree) based on the URI of the request.</p>
 <p>TODO
 Navigations are dispatchers that maintain a simple one-to-one association between
-an URI token`&#8217;w_footnote(each path component of an URI is a token; for example
-in <code class="docutils literal"><span class="pre">&quot;/foo/bar/quux&quot;</span></code> there are three tokens foo bar and quux.) and
-a widget.</p>
+an URI token <a class="footnote-reference" href="#uri-tokens" id="id2">[2]</a> and a widget.</p>
 <p>Note that each widget can also in turn be a navigation that consumes an
 URI token, thereby building a many-to-many relationship between tokens
 and widgets.</p>
@@ -204,8 +200,7 @@ map tokens to widgets:</p>
 </pre></div>
 </div>
 <p><code class="docutils literal"><span class="pre">MAKE-WIDGET</span></code> is applied to the widget argument so you can use strings
-and function designators`&#8217;w_footnote(i.e. symbols naming a global function
-and function objects themselves) instead of widgets in this context.</p>
+and function designators <a class="footnote-reference" href="#function-designators" id="id3">[3]</a> instead of widgets in this context.</p>
 </div>
 <div class="section" id="views">
 <h2>Views<a class="headerlink" href="#views" title="Permalink to this headline">¶</a></h2>
@@ -335,6 +330,28 @@ context, will choose effective template and call it with parameters</p>
 <span class="ss">:disabledp</span> <span class="nv">disabledp</span>
 </pre></div>
 </div>
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="tree" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>An acyclic graph with exactly one parent per node.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="uri-tokens" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>Еach path component of an URI is a token; for example
+in <code class="docutils literal"><span class="pre">&quot;/foo/bar/quux&quot;</span></code> there are three tokens <code class="docutils literal"><span class="pre">foo</span></code>
+<code class="docutils literal"><span class="pre">bar</span></code> and <code class="docutils literal"><span class="pre">quux</span></code>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="function-designators" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>I.e. symbols naming a global function and
+function objects themselves.</td></tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
