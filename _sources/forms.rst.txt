@@ -85,9 +85,6 @@ But let's assume that we want custom labels for the dropdown:
                                               ("We've solved that problem already..." . :resolved)))))
 
 
-
-
-
 Quickforms
 ==========
 
