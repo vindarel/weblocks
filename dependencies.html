@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Dependency handling &#8212; weblocks 0.13.7 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.3.6/yeti/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.13.7',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="HTML generation" href="html.html" />
+    <link rel="prev" title="Continuation-based tools" href="continuations.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          weblocks</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.13</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="changelog.html">Changelog</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Documentation <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components.html">Components of Weblocks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stores.html">Stores</a></li>
+<li class="toctree-l1"><a class="reference internal" href="widgets.html">Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="forms.html">Forms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="views.html">Views</a></li>
+<li class="toctree-l1"><a class="reference internal" href="continuations.html">Continuation-based tools</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Dependency handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="html.html">HTML generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="adapting.html">Adapting Weblocks to your needs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals.html">Weblocks Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing to Weblocks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hints.html">Hints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">ChangeLog</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">Dependency handling</a><ul>
+<li><a class="reference internal" href="#automatically-installing-external-dependencies">Automatically installing external dependencies</a></li>
+<li><a class="reference internal" href="#require-dependencies-for-widgets">Require dependencies for widgets</a><ul>
+<li><a class="reference internal" href="#weblocks-standard-dependencies">Weblocks standard dependencies</a></li>
+<li><a class="reference internal" href="#jquery-seq-dependencies-not-stable">jQuery-seq dependencies (not stable)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    <div class="col-md-9 content">
+      
+  <div class="section" id="dependency-handling">
+<h1>Dependency handling<a class="headerlink" href="#dependency-handling" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="automatically-installing-external-dependencies">
+<h2>Automatically installing external dependencies<a class="headerlink" href="#automatically-installing-external-dependencies" title="Permalink to this headline">¶</a></h2>
+<p>Currently Weblocks external dependencies are handled with &#8220;Weblocks
+assets&#8221; mechanism, see
+<a class="reference external" href="https://github.com/html/weblocks-utils#weblocks-assets-packages">https://github.com/html/weblocks-utils#weblocks-assets-packages</a>.</p>
+<p>It is not in Weblocks repository until it will be well tested.</p>
+<p>At this moment mechanism works well and solves problem of automatically
+installing external dependencies.</p>
+<p>There is no similar solution found for other frameworks and it gives
+much comfort of reusing Weblocks widgets.</p>
+</div>
+<div class="section" id="require-dependencies-for-widgets">
+<h2>Require dependencies for widgets<a class="headerlink" href="#require-dependencies-for-widgets" title="Permalink to this headline">¶</a></h2>
+<p>Weblocks has its dependency mechanism, it is responsible for rendering
+links to javascript or css files inside of pages.</p>
+<p>There is other dependencies mechanism which has it&#8217;s own advantages but
+it is not considered stable yet.</p>
+<div class="section" id="weblocks-standard-dependencies">
+<h3>Weblocks standard dependencies<a class="headerlink" href="#weblocks-standard-dependencies" title="Permalink to this headline">¶</a></h3>
+<p>Each widget and application itself can have dependencies.
+Application dependencies are always present on the page.
+Widget dependencies get into page during particular widgets rendering.</p>
+<p>Currently there are following dependency classes - <code class="docutils literal"><span class="pre">script-dependency</span></code>
+for javascript files, <code class="docutils literal"><span class="pre">stylesheet-dependency</span></code> for css files and
+<code class="docutils literal"><span class="pre">javascript-code-dependency</span></code> for javascript code.</p>
+<p>See documentation for more usage information
+(<a class="reference external" href="http://quickdocs.org/weblocks/api">http://quickdocs.org/weblocks/api</a>).</p>
+</div>
+<div class="section" id="jquery-seq-dependencies-not-stable">
+<h3>jQuery-seq dependencies (not stable)<a class="headerlink" href="#jquery-seq-dependencies-not-stable" title="Permalink to this headline">¶</a></h3>
+<p>If you know javascript well you can use jQuery-seq
+(<a class="reference external" href="https://github.com/html/jquery-seq">https://github.com/html/jquery-seq</a>) for dependencies loading.</p>
+<p>Just evaluate your javascript code inside withScripts and withStyles
+calls (see jQuery-seq documentation).</p>
+<p>For jQuery-seq dependencies you need to include jQuery-seq itself in
+application dependencies.</p>
+<p>Before including library we should get it served from http.</p>
+<p>The easiest way to do this is to install Weblocks assets package
+jquery-seq.  Other way is to download jQuery-seq, to put it into
+pub/scripts/ directory.</p>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+<div id="sourcelink">
+  <a href="_sources/dependencies.rst.txt"
+     rel="nofollow">Source</a>
+</div>
+      
+    </p>
+    <p>
+        &copy; Copyright 2017, .<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.5.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

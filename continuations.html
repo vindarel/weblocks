@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Continuation-based tools &#8212; weblocks 0.13.7 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.3.6/yeti/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.13.7',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Dependency handling" href="dependencies.html" />
+    <link rel="prev" title="Views" href="views.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          weblocks</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.13</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="changelog.html">Changelog</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Documentation <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components.html">Components of Weblocks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stores.html">Stores</a></li>
+<li class="toctree-l1"><a class="reference internal" href="widgets.html">Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="forms.html">Forms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="views.html">Views</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Continuation-based tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dependencies.html">Dependency handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="html.html">HTML generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="adapting.html">Adapting Weblocks to your needs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals.html">Weblocks Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing to Weblocks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hints.html">Hints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">ChangeLog</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">Continuation-based tools</a><ul>
+<li><a class="reference internal" href="#a-high-level-explanation-of-continuations">A high-level explanation of continuations</a></li>
+<li><a class="reference internal" href="#how-weblocks-uses-continuations">How Weblocks uses continuations</a></li>
+<li><a class="reference internal" href="#different-tools">Different tools</a><ul>
+<li><a class="reference internal" href="#widget-replacements">Widget replacements</a></li>
+<li><a class="reference internal" href="#modal-dialogs">Modal dialogs</a></li>
+<li><a class="reference internal" href="#when-to-use-with-call-cc-and-lambda-cc">When to use <code class="docutils literal"><span class="pre">WITH-CALL/CC</span></code> and <code class="docutils literal"><span class="pre">LAMBDA/CC</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#working-with-continuations">Working with continuations</a><ul>
+<li><a class="reference internal" href="#widget-continuations">Widget continuations</a></li>
+<li><a class="reference internal" href="#using-the-high-level-interfaces">Using the high-level interfaces</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    <div class="col-md-9 content">
+      
+  <div class="section" id="continuation-based-tools">
+<h1>Continuation-based tools<a class="headerlink" href="#continuation-based-tools" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="a-high-level-explanation-of-continuations">
+<h2>A high-level explanation of continuations<a class="headerlink" href="#a-high-level-explanation-of-continuations" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="how-weblocks-uses-continuations">
+<h2>How Weblocks uses continuations<a class="headerlink" href="#how-weblocks-uses-continuations" title="Permalink to this headline">¶</a></h2>
+<p>Only to replace widgets and remember how to restore the original state. XXX VERIFY</p>
+</div>
+<div class="section" id="different-tools">
+<h2>Different tools<a class="headerlink" href="#different-tools" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="widget-replacements">
+<h3>Widget replacements<a class="headerlink" href="#widget-replacements" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="modal-dialogs">
+<h3>Modal dialogs<a class="headerlink" href="#modal-dialogs" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="when-to-use-with-call-cc-and-lambda-cc">
+<h3>When to use <code class="docutils literal"><span class="pre">WITH-CALL/CC</span></code> and <code class="docutils literal"><span class="pre">LAMBDA/CC</span></code><a class="headerlink" href="#when-to-use-with-call-cc-and-lambda-cc" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="working-with-continuations">
+<h2>Working with continuations<a class="headerlink" href="#working-with-continuations" title="Permalink to this headline">¶</a></h2>
+<p>TODO: Introduction</p>
+<div class="section" id="widget-continuations">
+<h3>Widget continuations<a class="headerlink" href="#widget-continuations" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="using-the-high-level-interfaces">
+<h3>Using the high-level interfaces<a class="headerlink" href="#using-the-high-level-interfaces" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+<div id="sourcelink">
+  <a href="_sources/continuations.rst.txt"
+     rel="nofollow">Source</a>
+</div>
+      
+    </p>
+    <p>
+        &copy; Copyright 2017, .<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.5.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
